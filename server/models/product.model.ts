@@ -16,7 +16,7 @@ Product.init({
     type: DataTypes.STRING
   },
   unit_price: {
-    type: DataTypes.REAL(10, 2)
+    type: DataTypes.REAL
   },
   stock: {
     type: DataTypes.INTEGER

@@ -1,5 +1,9 @@
 import { Sequelize } from "sequelize";
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+const sequelize = new Sequelize('postgres','postgres','admin',{
+  host: 'localhost',
+  port:5432,
+  dialect: "postgres"
+});
 
 (async () => {
   try {
@@ -8,7 +12,6 @@ const sequelize = new Sequelize(process.env.DATABASE_URL);
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
-
   await sequelize.sync({ alter: true })
 })()
 
