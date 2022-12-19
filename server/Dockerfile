@@ -1,14 +1,16 @@
-FROM node as builder
-WORKDIR /usr/src/app
-COPY package.json yarn.lock ./
+# stage 1: Build
+FROM node as build
+WORKDIR /app
+COPY package*.json ./
 RUN yarn install
 COPY . .
 RUN yarn build
 
-FROM node:19-alpine
-WORKDIR /usr/src/app
+# stage 2: Run
+FROM node:14-alpine
+WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install
-COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=build /app/dist .
 EXPOSE 3000
-CMD [ "node", "dist/index.js" ]
+CMD [ "yarn", "start" ]
